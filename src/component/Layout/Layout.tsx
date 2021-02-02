@@ -2,11 +2,12 @@ import React from 'react';
 import { Container } from './Layout.styled';
 import Button from '../Button/Button';
 import debounce from 'lodash/debounce';
+import { analyze } from '../../api/objectDetection';
 
 interface Props {}
 
-const fetchSomething = () => {
-  //Store something
+const fetchSomething = async () => {
+  await analyze()
 }
 
 const deboounceFetchSomething = debounce(() => fetchSomething(), 500);
