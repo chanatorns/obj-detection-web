@@ -23,7 +23,8 @@
       {
         "name": "typescript-styled-plugin"
       }
-    ]
+    ],
+    "downlevelIteration": true
   },
   "include": [
     "src"
