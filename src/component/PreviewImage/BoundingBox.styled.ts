@@ -17,24 +17,34 @@ export const Box = styled.div<BoxProps>`
   height: ${props => props.fold ? 0 : props.height};
   box-shadow: ${props => props.fold
     ? 'none'
-    : 'rgb(3 102 214 / 70%) 0px 0px 0px 1px'};
+    : 'rgb(3 102 214 / 70%) 0px 0px 0px 2px'};
 
   &:hover {
     box-shadow: ${props => props.fold
     ? 'none'
-    : 'rgb(3 102 214 / 70%) 0px 0px 0px 2px'};
+    : 'rgb(3 102 214 / 70%) 0px 0px 0px 3px'};
   }
 `;
 
-export const Data = styled.div`
+type DataProps = {
+  isBoxHover: boolean,
+  fold: boolean,
+  dataFoldPos: {
+    top: string,
+    left: string
+  }
+}
+
+export const Data = styled.div<DataProps>`
   cursor: pointer;
   overflow: visible;
   width: max-content;
-  background-color: #ffffff54;
+  background-color: ${props => props.isBoxHover ? `#ffffff` : `#ffffff85` };
   padding: 0 7px;
   font-size: 12px;
   position: absolute;
-  top: -20px;
-  left: -2px;
+  top: ${props => props.fold ? props.dataFoldPos.top : `-20px`};
+  left: ${props => props.fold ? props.dataFoldPos.left : `-2px`};
   border-radius: 7px;
+  transition: all 0.2s;
 `;

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useHoverDirty } from 'react-use';
 import { Box, Data } from './BoundingBox.styled';
 
 const computeBoxPosition = (
@@ -17,13 +18,26 @@ const computeBoxPosition = (
   }
 }
 
-const toggleBox = (fold, setFold) => {
+const toggleBox = (e, { fold, setFold, setDataFoldPos = null }) => {
   setFold(!fold)
+
+  const rect = e.target.getBoundingClientRect();
+  const left = e.clientX - rect.left;
+  const top = e.clientY - rect.top;
+
+  if (setDataFoldPos) {
+    setDataFoldPos({ 
+      left: left+'px',
+      top: top+'px' 
+    })
+  }
 }
 
 const BoundingBox = (props: Props) => {
   const boxRef = useRef(null);
   const [fold, setFold] = useState(false);
+  const [dataFoldPos, setDataFoldPos] = useState({ left: '-2px', top: '-20px' });
+  const isBoxHover = useHoverDirty(boxRef);
   const { bounding_box, imgNaturalDimension, name, parent, confidence } = props;
   const confidenceStr = `${Math.trunc(confidence*10000)/100}%`;
   const { top, left, width, height } = computeBoxPosition(bounding_box, imgNaturalDimension);
@@ -35,8 +49,11 @@ const BoundingBox = (props: Props) => {
     left={left}
     width={width}
     height={height}
-    onClick={() => toggleBox(fold, setFold)}>
-    <Data onClick={() => toggleBox(fold, setFold)}>
+    onClick={(e) => toggleBox(e, { fold, setFold, setDataFoldPos })}>
+    <Data isBoxHover={isBoxHover}
+      fold={fold}
+      dataFoldPos={dataFoldPos}
+      onClick={(e) => toggleBox(e, { fold, setFold, setDataFoldPos })} >
       { fold
         ? `${name}`
         : `${name} ${parent} ${confidenceStr}`
