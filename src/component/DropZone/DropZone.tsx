@@ -1,11 +1,25 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { encode } from 'base64-arraybuffer';
 import { observer } from 'mobx-react-lite';
 import fileStore from '../../store/fileStore';
+import { Wrapper } from './DropZone.styled';
+
+const activeStyle = {
+  borderColor: '#2196f3'
+};
+
+const acceptStyle = {
+  borderColor: '#275efe'
+};
+
+const rejectStyle = {
+  borderColor: '#ff1744'
+};
 
 const Dropzone = () => {
   const onDrop = useCallback((acceptedFiles) => {
+    fileStore.setAnalyzeData(null);
     acceptedFiles.forEach((file) => {
       const reader = new FileReader()
 
@@ -23,16 +37,32 @@ const Dropzone = () => {
     
   }, [])
 
-  const { getRootProps, getInputProps } = useDropzone({ 
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject
+  } = useDropzone({ 
     accept: 'image/*',
     onDrop
   })
+  
+  const style = useMemo(() => ({
+    ...(isDragActive ? activeStyle : {}),
+    ...(isDragAccept ? acceptStyle : {}),
+    ...(isDragReject ? rejectStyle : {})
+  }), [
+    isDragActive,
+    isDragReject,
+    isDragAccept
+  ]);
 
   return (
-    <div {...getRootProps()}>
+    <Wrapper {...getRootProps({ style })}>
       <input {...getInputProps()} />
       <p>Drag n drop some files here, or click to select files</p>
-    </div>
+    </Wrapper>
   )
 }
 

@@ -19,19 +19,20 @@ const deboounceFetchSomething = debounce(() => fetchSomething(), 500);
 const Layout = (props: Props) => {
   const preview = dataStore.file;
   const detected_objects = dataStore.analyzeData?.detected_objects;
+
   return (
     <Container fluid>
       <Container>
-        <Dropzone />
         {
           preview &&
-            <PreviewImage
-              imageSrc={preview && `data:image/jpeg;base64,${preview.base64}`}
-              detectedObjects={detected_objects}/>
+            <>
+              <PreviewImage
+                imageSrc={preview && `data:image/jpeg;base64,${preview.base64}`}
+                detectedObjects={detected_objects}/>
+              <Button onClick={deboounceFetchSomething}>Analyze</Button>
+            </>
         }
-        <Button onClick={deboounceFetchSomething}
-          disabled={!preview}
-        >Analyze</Button>
+        <Dropzone />
       </Container>
     </Container>
   );
