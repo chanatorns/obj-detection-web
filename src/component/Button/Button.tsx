@@ -2,7 +2,8 @@ import React from 'react';
 import { StyledButton } from './Button.styled';
 
 interface Props {
-  onClick?: () => void
+  onClick?: () => void,
+  disabled?: boolean
 }
 
 const Button: React.FunctionComponent<Props> = (props) => {

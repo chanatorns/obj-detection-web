@@ -1,13 +1,11 @@
-import { BoundingBox } from "@nipacloud/nvision/dist/proto/generated/NvisionRequest_pb";
 import { makeAutoObservable } from "mobx";
 import { analyze } from '../api/objectDetection';
+import { AnalyzeData, File } from "../definitions/analyzeData";
 
 class DataStore {
-  private file: File = {
-    base64: null
-  };
-  private loading = false;
-  private analyzeData: AnalyzeData;
+  file: File = null;
+  loading = false;
+  analyzeData: AnalyzeData;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,22 +26,6 @@ class DataStore {
 let dataStore: DataStore = null;
 if (!dataStore) {
   dataStore = new DataStore();
-}
-
-type File = {
-  base64: string
-}
-
-type DetectedObjects = {
-  bounding_box: BoundingBox[],
-  confidence: number,
-  name: string,
-  parent: string
-}
-
-type AnalyzeData = {
-  detected_objects: DetectedObjects[],
-  service_id: string
 }
 
 export default dataStore;

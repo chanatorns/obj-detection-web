@@ -4,6 +4,9 @@ import Button from '../Button';
 import debounce from 'lodash/debounce';
 import Dropzone from '../DropZone';
 import fileStore from '../../store/fileStore';
+import { observer } from 'mobx-react-lite';
+import dataStore from '../../store/fileStore';
+import PreviewImage from '../PreviewImage';
 
 interface Props {}
 
@@ -14,14 +17,24 @@ const fetchSomething = async () => {
 const deboounceFetchSomething = debounce(() => fetchSomething(), 500);
 
 const Layout = (props: Props) => {
+  const preview = dataStore.file;
+  const detected_objects = dataStore.analyzeData?.detected_objects;
   return (
     <Container fluid>
       <Container>
         <Dropzone />
-        <Button onClick={deboounceFetchSomething}>Fetch me</Button>
+        {
+          preview &&
+            <PreviewImage
+              imageSrc={preview && `data:image/jpeg;base64,${preview.base64}`}
+              detectedObjects={detected_objects}/>
+        }
+        <Button onClick={deboounceFetchSomething}
+          disabled={!preview}
+        >Analyze</Button>
       </Container>
     </Container>
   );
 }
 
-export default Layout;
+export default observer(Layout);
