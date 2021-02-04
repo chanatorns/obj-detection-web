@@ -17,9 +17,11 @@ class DataStore {
 
 
   fetchAnalyze = async () => {
+    this.setLoading(true);
     const result = await analyze(this.file.base64)
       .catch(() => null);
     this.setAnalyzeData(result);
+    this.setLoading(false);
   }
 }
 

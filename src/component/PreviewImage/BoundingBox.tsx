@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useHoverDirty } from 'react-use';
 import { Box, Data } from './BoundingBox.styled';
 
+const DEFAULT_DATA_FOLD_POS = { left: '-2px', top: '-20px' };
 const computeBoxPosition = (
   bounding_box: Props['bounding_box'],
   imgNaturalDimension: Props['imgNaturalDimension']
@@ -18,7 +19,7 @@ const computeBoxPosition = (
   }
 }
 
-const toggleBox = (e, { fold, setFold, setDataFoldPos = null }) => {
+const toggleBox = (e, { fold, setFold, setDataFoldPos }) => {
   setFold(!fold)
 
   const rect = e.target.getBoundingClientRect();
@@ -36,7 +37,7 @@ const toggleBox = (e, { fold, setFold, setDataFoldPos = null }) => {
 const BoundingBox = (props: Props) => {
   const boxRef = useRef(null);
   const [fold, setFold] = useState(false);
-  const [dataFoldPos, setDataFoldPos] = useState({ left: '-2px', top: '-20px' });
+  const [dataFoldPos, setDataFoldPos] = useState(DEFAULT_DATA_FOLD_POS);
   const isBoxHover = useHoverDirty(boxRef);
   const { bounding_box, imgNaturalDimension, name, parent, confidence } = props;
   const confidenceStr = `${Math.trunc(confidence*10000)/100}%`;

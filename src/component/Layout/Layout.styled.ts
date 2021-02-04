@@ -17,3 +17,19 @@ export const Container = styled.div<ContainerProps>`
   justify-content: center;
   min-height: 95vh;
 `;
+
+export const PreviewWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const AnalyzeButtonWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f8ff5c;
+`;
