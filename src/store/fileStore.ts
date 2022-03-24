@@ -13,7 +13,7 @@ class DataStore {
 
   setLoading = v => this.loading = v;
   setFile = (v: File) => this.file = v;
-  setAnalyzeData = v => this.analyzeData = v;
+  setAnalyzeData = (v: AnalyzeData) => this.analyzeData = v;
 
 
   fetchAnalyze = async () => {
