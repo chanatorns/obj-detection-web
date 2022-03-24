@@ -61,7 +61,7 @@ const Dropzone = () => {
   return (
     <Wrapper {...getRootProps({ style })}>
       <input {...getInputProps()} />
-      <p>Drag n drop some files here, or click to select files</p>
+      <p>Drag n drop some image here <br/>or<br/> click to select image file</p>
     </Wrapper>
   )
 }

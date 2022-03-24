@@ -26,21 +26,25 @@ const Layout = (props: Props) => {
       <Container>
         {
           preview &&
-            <PreviewWrapper>
-              <PreviewImage
-                imageSrc={preview && `data:image/jpeg;base64,${preview.base64}`}
-                detectedObjects={detected_objects}/>
-              {
-                !detected_objects && 
-                  <AnalyzeButtonWrapper>
-                    {
-                      loading
-                        ? <Loading/>
-                        : <Button onClick={deboounceFetchSomething}>Analyze</Button>
-                    }
-                  </AnalyzeButtonWrapper>
-              }
-            </PreviewWrapper>
+            <>
+              <PreviewWrapper>
+                <PreviewImage
+                  imageSrc={preview && `data:image/jpeg;base64,${preview.base64}`}
+                  detectedObjects={detected_objects}/>
+                {
+                  !detected_objects && 
+                    <AnalyzeButtonWrapper>
+                      {
+                        loading
+                          ? <Loading/>
+                          : <Button onClick={deboounceFetchSomething}>Analyze</Button>
+                      }
+                    </AnalyzeButtonWrapper>
+                }
+              </PreviewWrapper>
+              {detected_objects && <i>*click inside the box to hide the box</i>}
+              <br/>
+            </>
         }
         <Dropzone />
       </Container>
